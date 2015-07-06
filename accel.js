@@ -17,12 +17,30 @@ $(function() {
   var dataAX = makeArray(totalPoints, 0);
   var dataAY = makeArray(totalPoints, 0);
   var dataAZ = makeArray(totalPoints, 0);
+  var dataVZ = makeArray(totalPoints, 0);
+  var dataVX = makeArray(totalPoints, 0);
+  var dataVY = makeArray(totalPoints, 0);
   var dataT  = makeArray(totalPoints, 0);
   var startTime = new Date().getTime();
+
 
   var updateInterval = 100;
 
   var plot = $.plot("#acceleration-plot", [_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)], {
+    series: {
+      shadowSize: 0
+    },
+    yaxis: {
+      min: -15,
+      max: 15
+    },
+    xaxis: {
+      min: 0,
+      max: 10
+    }
+  });
+
+  var plot = $.plot("#velocity-plot", [_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)], {
     series: {
       shadowSize: 0
     },
@@ -45,10 +63,12 @@ $(function() {
     $("#device-motion-status").text("supported")
     window.addEventListener('devicemotion', function(e) {
       acceleration = e.accelerationIncludingGravity;
+      var updateRate = e.interval;
       $("#x").text(acceleration.x.toFixed(2))
       $("#y").text(acceleration.y.toFixed(2))
       $("#z").text(acceleration.z.toFixed(2))
       $("#total").text(vecLength(acceleration).toFixed(2));
+      $("#update-interval").text(updateRate);
     });
   });
 
