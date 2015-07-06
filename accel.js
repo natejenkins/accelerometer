@@ -101,6 +101,7 @@ $(function() {
       avgAZ = avgAZ/avgCounter;
       avgAY = avgAY/avgCounter;
       avgAX = avgAX/avgCounter;
+      newVx = newVy = newVz = oldVx = oldVy = oldVz = 0;
     }
     console.info("avgCounter: " + avgCounter)
     console.info("avgAX " + avgAX)
