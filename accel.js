@@ -21,9 +21,9 @@ $(function() {
   var dataVX = makeArray(totalPoints, 0.);
   var dataVY = makeArray(totalPoints, 0.);
   var dataT  = makeArray(totalPoints, 0.);
-  var avgAX;
-  var avgAY;
-  var avgAZ;
+  var avgAX=0.;
+  var avgAY=0.;
+  var avgAZ=0.;
   var avgCounter;
   var boolZeroing=false;
   var startTime = new Date().getTime();
