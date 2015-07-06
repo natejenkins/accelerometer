@@ -57,7 +57,7 @@ $(function() {
     dataAX.shift();
     dataAY.shift();
     dataAZ.shift();
-    dataAT.shift();
+    dataT.shift();
     dataAX.push(acceleration.x);
     dataAY.push(acceleration.y);
     dataAZ.push(acceleration.z);
