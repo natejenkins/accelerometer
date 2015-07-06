@@ -1,3 +1,13 @@
+$(document).ready(function(){
+  console.info("setting content")
+  $("#content").height($(window).height());
+  $(window).resize(function(){
+    console.info("resizing");
+    $("#content").height($(window).height());
+  });
+});
+
+
 function vecLength(v){
   var lSquared = Math.pow(v.x, 2) + Math.pow(v.y, 2) + Math.pow(v.z, 2);
   return Math.pow(lSquared, 0.5);

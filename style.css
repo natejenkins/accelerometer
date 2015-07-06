@@ -1,0 +1,11 @@
+.plot {
+  width: 100%;
+  height: 40%;
+  font-size: 14px;
+  line-height: 1.2em;
+}
+
+#content {
+  width: 100%;
+  height: 500px;
+}
