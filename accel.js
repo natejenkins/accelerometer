@@ -72,13 +72,13 @@ $(function() {
     $("#device-motion-status").text("supported")
     window.addEventListener('devicemotion', function(e) {
       acceleration = e.accelerationIncludingGravity;
-      console.info("before: " + acceleration)
+      console.info("before: " + acceleration.z)
       if(!boolZeroing){
         acceleration.x -= avgAX;
         acceleration.y -= avgAY;
         acceleration.z -= avgAZ;
       }
-      console.info("after: " + acceleration)
+      console.info("after: " + acceleration.z)
       var updateRate = e.interval;
       $("#x").text(acceleration.x.toFixed(2))
       $("#y").text(acceleration.y.toFixed(2))
