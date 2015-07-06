@@ -12,13 +12,13 @@ function makeArray(length, defaultValue){
 }
 
 $(function() {
+  var totalPoints = 100;
   var acceleration = {x:0, y:0, z:0};
-  var dataAX = makeArray(length, 0);
-  var dataAY = makeArray(length, 0);
-  var dataAZ = makeArray(length, 0);
-  var dataT  = makeArray(length, 0);
+  var dataAX = makeArray(totalPoints, 0);
+  var dataAY = makeArray(totalPoints, 0);
+  var dataAZ = makeArray(totalPoints, 0);
+  var dataT  = makeArray(totalPoints, 0);
   var startTime = new Date().getTime();
-  totalPoints = 1000;
 
   var updateInterval = 100;
 
@@ -54,14 +54,19 @@ $(function() {
 
   function update() {
     var time = (new Date().getTime() - startTime)/1000.0;
-    // dataAX.shift();
-    // dataAY.shift();
-    // dataAZ.shift();
-    // dataT.shift();
+    var bufferPosition = bufferPosition + 1 % totalPoints;
+    dataAX.shift();
+    dataAY.shift();
+    dataAZ.shift();
+    dataT.shift();
     dataAX.push(acceleration.x);
     dataAY.push(acceleration.y);
     dataAZ.push(acceleration.z);
     dataT.push(time);
+    window.dataAX = dataAX;
+    window.dataAY = dataAY;
+    window.dataAZ = dataAZ;
+    window.dataT = dataT;
     plot.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
     plot.draw();
     setTimeout(update, updateInterval);
