@@ -3,6 +3,33 @@ function vecLength(v){
   return Math.pow(lSquared, 0.5);
 }
 
+$(function() {
+  var dataY = [];
+  var dataT = [];
+  var dataTY = [[0,1], [1,2], [2,3]];
+  totalPoints = 300;
+
+  var updateInterval = 30;
+
+  var plot = $.plot("#acceleration-plot", [dataTY], {
+    series: {
+      shadowSize: 0 // Drawing is faster without shadows
+    },
+    yaxis: {
+      min: -15,
+      max: 15
+    }
+  });
+
+  function update() {
+    plot.setData([dataTY]);
+    plot.draw();
+    setTimeout(update, updateInterval);
+  }
+
+  update();
+});
+
 $(document).ready(function(){
   console.info("adding event");
   $("#device-motion-status").text("supported")

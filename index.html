@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>Accelerometer</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js" type="text/javascript"></script>
   <script src="accel.js" type="text/javascript"></script>
+
 </head>
 <body>
   <div id="content">
@@ -13,6 +16,7 @@
     <p>z: <span id="z"></span></p>
     <p>total: <span id="total"></span></p>
   </div>
+  <div id="acceleration-plot" style="width:600px;height:300px;"></div>
   
 </body>
 </html>
