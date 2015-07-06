@@ -13,20 +13,24 @@ function makeArray(length, defaultValue){
 
 $(function() {
   var totalPoints = 100;
-  var acceleration = {x:0, y:0, z:0};
-  var dataAX = makeArray(totalPoints, 0);
-  var dataAY = makeArray(totalPoints, 0);
-  var dataAZ = makeArray(totalPoints, 0);
-  var dataVZ = makeArray(totalPoints, 0);
-  var dataVX = makeArray(totalPoints, 0);
-  var dataVY = makeArray(totalPoints, 0);
-  var dataT  = makeArray(totalPoints, 0);
+  var acceleration = {x:0., y:0., z:1.};
+  var dataAX = makeArray(totalPoints, 0.);
+  var dataAY = makeArray(totalPoints, 0.);
+  var dataAZ = makeArray(totalPoints, 0.);
+  var dataVZ = makeArray(totalPoints, 0.);
+  var dataVX = makeArray(totalPoints, 0.);
+  var dataVY = makeArray(totalPoints, 0.);
+  var dataT  = makeArray(totalPoints, 0.);
   var startTime = new Date().getTime();
+  var oldTime = startTime;
+  var newTime = startTime;
+  var oldVx = 0., oldVy = 0., oldVz = 0.;
+  var newVx = 0., newVy = 0., newVz = 0.;
 
 
   var updateInterval = 100;
 
-  var plot = $.plot("#acceleration-plot", [_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)], {
+  var plotA = $.plot("#acceleration-plot", [_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)], {
     series: {
       shadowSize: 0
     },
@@ -40,7 +44,7 @@ $(function() {
     }
   });
 
-  var plot = $.plot("#velocity-plot", [_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)], {
+  var plotV = $.plot("#velocity-plot", [_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)], {
     series: {
       shadowSize: 0
     },
@@ -73,7 +77,14 @@ $(function() {
   });
 
   function update() {
-    var time = (new Date().getTime() - startTime)/1000.0;
+    oldTime = newTime;
+    newTime = new Date().getTime();
+    oldVx = newVx;
+    oldVy = newVy;
+    oldVz = newVz;
+    var deltaTime = (newTime - oldTime)/1000.0;
+    // console.info("deltaTime: " + deltaTime);
+    var time = (newTime - startTime)/1000.0;
     var bufferPosition = bufferPosition + 1 % totalPoints;
     dataAX.shift();
     dataAY.shift();
@@ -82,13 +93,21 @@ $(function() {
     dataAX.push(acceleration.x);
     dataAY.push(acceleration.y);
     dataAZ.push(acceleration.z);
+
+    newVx = oldVx + acceleration.x*deltaTime;
+    newVy = oldVy + acceleration.y*deltaTime;
+    newVz = oldVz + acceleration.z*deltaTime;
+    // console.info(newVz);
+    dataVX.push(newVx);
+    dataVY.push(newVy);
+    dataVZ.push(newVz);
+    window.dataVZ = dataVZ;
     dataT.push(time);
-    window.dataAX = dataAX;
-    window.dataAY = dataAY;
-    window.dataAZ = dataAZ;
-    window.dataT = dataT;
-    plot.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
-    plot.draw();
+    // plotA.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
+    // plotA.draw();
+    // plotV.setData([_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)]);
+    plotV.setData([[1,1], [3,3], [5,8], [10,10]]);
+    plotV.draw();
     setTimeout(update, updateInterval);
   }
 
