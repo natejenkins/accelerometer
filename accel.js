@@ -54,10 +54,10 @@ $(function() {
 
   function update() {
     var time = (new Date().getTime() - startTime)/1000.0;
-    dataAX.shift();
-    dataAY.shift();
-    dataAZ.shift();
-    dataT.shift();
+    // dataAX.shift();
+    // dataAY.shift();
+    // dataAZ.shift();
+    // dataT.shift();
     dataAX.push(acceleration.x);
     dataAY.push(acceleration.y);
     dataAZ.push(acceleration.z);
