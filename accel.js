@@ -21,6 +21,11 @@ $(function() {
   var dataVX = makeArray(totalPoints, 0.);
   var dataVY = makeArray(totalPoints, 0.);
   var dataT  = makeArray(totalPoints, 0.);
+  var avgAX;
+  var avgAY;
+  var avgAZ;
+  var avgCounter;
+  var boolZeroing=false;
   var startTime = new Date().getTime();
   var oldTime = startTime;
   var newTime = startTime;
@@ -67,13 +72,60 @@ $(function() {
     $("#device-motion-status").text("supported")
     window.addEventListener('devicemotion', function(e) {
       acceleration = e.accelerationIncludingGravity;
+      if(!boolZeroing){
+        acceleration.x -= avgAX;
+        acceleration.y -= avgAY;
+        acceleration.z -= avgAZ;
+      }
       var updateRate = e.interval;
       $("#x").text(acceleration.x.toFixed(2))
       $("#y").text(acceleration.y.toFixed(2))
       $("#z").text(acceleration.z.toFixed(2))
       $("#total").text(vecLength(acceleration).toFixed(2));
       $("#update-interval").text(updateRate);
+      if(boolZeroing){
+        avgAZ += acceleration.z;
+        avgAX += acceleration.x;
+        avgAY += acceleration.y
+        avgCounter += 1;
+      }
     });
+  });
+
+  function stopZeroing(){
+    console.info("stopzeroing");
+    if(avgCounter == 0){
+      console.info("no measurements made during zeroing");
+      boolZeroing = false;
+      return;
+    }
+    $("#zero-acceleration").text("Zero");
+    avgAZ = avgAZ/avgCounter;
+    avgAY = avgAY/avgCounter;
+    avgAX = avgAX/avgCounter;
+    console.info("avgCounter: " + avgCounter)
+    console.info("avgAX " + avgAX)
+    console.info("avgAY " + avgAY)
+    console.info("avgAZ " + avgAZ)
+    boolZeroing = false;
+  }
+  function startZeroing(){
+    console.info("startzeroing");
+
+    $("#zero-acceleration").text("zeroing");
+    avgAZ = avgAY = avgAX = 0.0;
+    console.info("avgAX " + avgAX)
+    console.info("avgAY " + avgAY)
+    console.info("avgAZ " + avgAZ)
+    avgCounter = 0;
+    boolZeroing = true;
+    setTimeout(stopZeroing, 1000);
+    
+  }
+  $("#zero-acceleration").click(function(e){
+    console.info("button clicked");
+    $("#zero-acceleration").text("preparing");
+    setTimeout(startZeroing, 1000);
   });
 
   function update() {
