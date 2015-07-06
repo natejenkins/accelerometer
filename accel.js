@@ -3,8 +3,8 @@ $(document).ready(function(){
   $("#device-motion-status").text("supported")
   window.addEventListener('devicemotion', function(e) {
     var a = e.accelerationIncludingGravity;
-    $("#x").text(a.x.toFixed(4))
-    $("#y").text(a.x.toFixed(4))
-    $("#z").text(a.x.toFixed(4))
+    $("#x").text(a.x.toFixed(2))
+    $("#y").text(a.y.toFixed(2))
+    $("#z").text(a.z.toFixed(2))
   });
 })();
