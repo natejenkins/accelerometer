@@ -45,7 +45,7 @@ $(function() {
   var xMax = 20.;
 
 
-  var updateInterval = 100;
+  var updateInterval = 20;
 
   var plotA = $.plot("#acceleration-plot", [_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)], {
     series: {
