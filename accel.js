@@ -71,7 +71,7 @@ $(function() {
     console.info("adding event");
     $("#device-motion-status").text("supported")
     window.addEventListener('devicemotion', function(e) {
-      acceleration = {x: e.accelerationIncludingGravity.x, y: e.accelerationIncludingGravity.y, z: e.accelerationIncludingGravity.y};
+      acceleration = {x: e.accelerationIncludingGravity.x, y: e.accelerationIncludingGravity.y, z: e.accelerationIncludingGravity.z};
       if(!boolZeroing){
         acceleration.x -= avgAX;
         acceleration.y -= avgAY;
