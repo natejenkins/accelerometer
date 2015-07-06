@@ -13,7 +13,7 @@ function makeArray(length, defaultValue){
 
 $(function() {
   var totalPoints = 100;
-  var acceleration = {x:0., y:0., z:1.};
+  var acceleration = {x:0., y:0., z:0.};
   var dataAX = makeArray(totalPoints, 0.);
   var dataAY = makeArray(totalPoints, 0.);
   var dataAZ = makeArray(totalPoints, 0.);
@@ -98,15 +98,17 @@ $(function() {
     newVy = oldVy + acceleration.y*deltaTime;
     newVz = oldVz + acceleration.z*deltaTime;
     // console.info(newVz);
+    dataVX.shift();
+    dataVY.shift();
+    dataVZ.shift();
     dataVX.push(newVx);
     dataVY.push(newVy);
     dataVZ.push(newVz);
     window.dataVZ = dataVZ;
     dataT.push(time);
-    // plotA.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
-    // plotA.draw();
-    // plotV.setData([_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)]);
-    plotV.setData([[1,1], [3,3], [5,8], [10,10]]);
+    plotA.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
+    plotA.draw();
+    plotV.setData([_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)]);
     plotV.draw();
     setTimeout(update, updateInterval);
   }
