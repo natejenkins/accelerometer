@@ -45,7 +45,7 @@ $(function() {
     },
     xaxis: {
       min: 0,
-      max: 10
+      max: 30
     }
   });
 
