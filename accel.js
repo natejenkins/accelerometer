@@ -52,8 +52,8 @@ $(function() {
       shadowSize: 0
     },
     yaxis: {
-      min: -5,
-      max: 5
+      min: -2,
+      max: 2
     },
     xaxis: {
       min: xMin,
