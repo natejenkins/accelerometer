@@ -94,19 +94,19 @@ $(function() {
 
   function stopZeroing(){
     console.info("stopzeroing");
-    if(avgCounter == 0){
-      console.info("no measurements made during zeroing");
-      boolZeroing = false;
-      return;
-    }
     $("#zero-acceleration").text("Zero");
-    avgAZ = avgAZ/avgCounter;
-    avgAY = avgAY/avgCounter;
-    avgAX = avgAX/avgCounter;
+    if(avgCounter != 0){
+      avgAZ = avgAZ/avgCounter;
+      avgAY = avgAY/avgCounter;
+      avgAX = avgAX/avgCounter;
+    }
     console.info("avgCounter: " + avgCounter)
     console.info("avgAX " + avgAX)
     console.info("avgAY " + avgAY)
     console.info("avgAZ " + avgAZ)
+    $("#avg-ax").text(avgAX);
+    $("#avg-ay").text(avgAY);
+    $("#avg-az").text(avgAZ);
     boolZeroing = false;
   }
   function startZeroing(){
