@@ -1,6 +1,6 @@
 function vecLength(v){
-  var l = Math.pow(v.x, 2) + Math.pow(v.y, 2) + Math.pow(v.z, 2);
-  return l;
+  var lSquared = Math.pow(v.x, 2) + Math.pow(v.y, 2) + Math.pow(v.z, 2);
+  return Math.pow(lSquared, 0.5);
 }
 
 $(document).ready(function(){
