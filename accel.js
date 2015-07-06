@@ -75,15 +75,18 @@ $(function() {
     }
   });
 
-  function setPlotData(){
-
-  }
-
   $(document).ready(function(){
     console.info("adding event");
     $("#device-motion-status").text("supported")
     window.addEventListener('devicemotion', function(e) {
-      acceleration = {x: e.accelerationIncludingGravity.x, y: e.accelerationIncludingGravity.y, z: e.accelerationIncludingGravity.z};
+      if(e.acceleration){
+        console.info("using acceleration");
+        acceleration = {x: e.acceleration.x, y: e.acceleration.y, z: e.acceleration.z};
+      }
+      else{
+        console.info("using accelerationIncludingGravity");
+        acceleration = {x: e.accelerationIncludingGravity.x, y: e.accelerationIncludingGravity.y, z: e.accelerationIncludingGravity.z};
+      }
       if(!boolZeroing){
         acceleration.x -= avgAX;
         acceleration.y -= avgAY;
