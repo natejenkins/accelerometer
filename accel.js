@@ -12,20 +12,17 @@ function makeArray(length, defaultValue){
 }
 
 $(function() {
-
+  var acceleration = {x:0, y:0, z:0};
   var dataAX = makeArray(length, 0);
   var dataAY = makeArray(length, 0);
   var dataAZ = makeArray(length, 0);
   var dataT  = makeArray(length, 0);
-  var dataTAX = [[0,1], [1,3], [2,3]];
-  var dataTAY = [[0,1], [1,4], [2,3]];
-  var dataTAZ = [[0,1], [1,2], [2,3]];
   var startTime = new Date().getTime();
   totalPoints = 1000;
 
-  var updateInterval = 500;
+  var updateInterval = 100;
 
-  var plot = $.plot("#acceleration-plot", [dataTAX, dataTAY, dataTAZ], {
+  var plot = $.plot("#acceleration-plot", [_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)], {
     series: {
       shadowSize: 0
     },
@@ -39,11 +36,29 @@ $(function() {
     }
   });
 
+  function setPlotData(){
+
+  }
+
+  $(document).ready(function(){
+    console.info("adding event");
+    $("#device-motion-status").text("supported")
+    window.addEventListener('devicemotion', function(e) {
+      acceleration = e.accelerationIncludingGravity;
+      $("#x").text(acceleration.x.toFixed(2))
+      $("#y").text(acceleration.y.toFixed(2))
+      $("#z").text(acceleration.z.toFixed(2))
+      $("#total").text(vecLength(acceleration).toFixed(2));
+    });
+  });
+
   function update() {
     var time = (new Date().getTime() - startTime)/1000.0;
-    dataTAX = dataTAX.slice(1);
-    dataTAX.push([time, 5]);
-    plot.setData([dataTAX, dataTAY, dataTAZ]);
+    dataAX.push(acceleration.x);
+    dataAY.push(acceleration.y);
+    dataAZ.push(acceleration.z);
+    dataT.push(time);
+    plot.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
     plot.draw();
     setTimeout(update, updateInterval);
   }
@@ -51,14 +66,4 @@ $(function() {
   update();
 });
 
-$(document).ready(function(){
-  console.info("adding event");
-  $("#device-motion-status").text("supported")
-  window.addEventListener('devicemotion', function(e) {
-    var a = e.accelerationIncludingGravity;
-    $("#x").text(a.x.toFixed(2))
-    $("#y").text(a.y.toFixed(2))
-    $("#z").text(a.z.toFixed(2))
-    $("#total").text(vecLength(a).toFixed(2));
-  });
-});
+
