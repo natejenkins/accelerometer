@@ -31,6 +31,8 @@ $(function() {
   var newTime = startTime;
   var oldVx = 0., oldVy = 0., oldVz = 0.;
   var newVx = 0., newVy = 0., newVz = 0.;
+  var xMin = 0.;
+  var xMax = 30.;
 
 
   var updateInterval = 100;
@@ -44,8 +46,8 @@ $(function() {
       max: 15
     },
     xaxis: {
-      min: 0,
-      max: 30
+      min: xMin,
+      max: xMax
     }
   });
 
@@ -58,8 +60,8 @@ $(function() {
       max: 15
     },
     xaxis: {
-      min: 0,
-      max: 30
+      min: xMin,
+      max: xMax
     }
   });
 
@@ -161,6 +163,18 @@ $(function() {
     dataVZ.push(newVz);
     window.dataVZ = dataVZ;
     dataT.push(time);
+    if(time>xMax){
+      var xTemp = xMax;
+      xMax += xMax - xMin;
+      xMin = xTemp;
+      plotA.getOptions().xaxes[0].min = xMin;
+      plotA.getOptions().xaxes[0].max = xMax;
+      plotA.setupGrid();
+      plotV.getOptions().xaxes[0].min = xMin;
+      plotV.getOptions().xaxes[0].max = xMax;
+      plotV.setupGrid();
+    }
+
     plotA.setData([_.zip(dataT, dataAX), _.zip(dataT, dataAY), _.zip(dataT, dataAZ)]);
     plotA.draw();
     plotV.setData([_.zip(dataT, dataVX), _.zip(dataT, dataVY), _.zip(dataT, dataVZ)]);
