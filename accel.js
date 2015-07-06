@@ -32,7 +32,7 @@ $(function() {
   var oldVx = 0., oldVy = 0., oldVz = 0.;
   var newVx = 0., newVy = 0., newVz = 0.;
   var xMin = 0.;
-  var xMax = 30.;
+  var xMax = 20.;
 
 
   var updateInterval = 100;
